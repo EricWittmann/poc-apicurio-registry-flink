@@ -1,0 +1,1 @@
+# poc-apicurio-registry-flink
