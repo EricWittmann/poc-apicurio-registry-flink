@@ -4,7 +4,7 @@ This is a proof of concept for implementing Apicurio Registry as a Flink Catalog
 
 ## Prerequisites
 
-- Java 11 or later
+- Java 17 or later
 - Maven 3.6 or later
 - Docker and Docker Compose (for running Kafka)
 - Apache Flink (for testing)
@@ -42,12 +42,7 @@ The current implementation uses Flink's `GenericInMemoryCatalog` as a placeholde
    This will start:
    - Zookeeper (port 2181)
    - Kafka (port 9092)
-   - Kafka UI (port 8080) - A web interface for managing Kafka topics
-
-   You can access the Kafka UI at http://localhost:8080 to:
-   - View and create topics
-   - Monitor messages
-   - Manage consumer groups
+   - Apicurio Registry (port 8080)
 
 2. Create the required Kafka topics using the provided script:
    ```bash
@@ -66,30 +61,15 @@ The current implementation uses Flink's `GenericInMemoryCatalog` as a placeholde
    docker exec kafka kafka-topics --create --topic flink.recommended.products --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
    ```
 
-3. Copy the product inventory CSV to the expected location:
-   ```bash
-   cp src/main/resources/product_inventory.csv /tmp/product_inventory.csv
-   ```
+3. Run the application using one of these methods:
 
-4. Run the application using one of these methods:
-
-   a. Using Maven (recommended for development):
-   ```bash
-   mvn exec:java
-   ```
-   
-   b. Using the packaged JAR:
+   a. Using the packaged JAR:
    ```bash
    mvn clean package
    java -jar target/poc-apicurio-registry-flink-1.0-SNAPSHOT.jar
    ```
 
-   To pass arguments to the application when using Maven:
-   ```bash
-   mvn exec:java -Dexec.args="arg1 arg2"
-   ```
-
-5. To stop Kafka when done:
+4. To stop Kafka when done:
    ```bash
    docker-compose down
    ```
